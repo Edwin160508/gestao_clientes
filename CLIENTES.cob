@@ -1,15 +1,15 @@
        IDENTIFICATION DIVISION.
        PROGRAM-ID.  CLIENTES.
-      ******************************************************************
+      *****************************************************************
       * OBJETIVO:  SISTEMA DE GESTAO DE CLIENTES
       * AUTHOR  :  EDWIN PEREIRA OLIVEIRA LIMA
-      ******************************************************************
-      ******************************************************************
+      *****************************************************************
+      *****************************************************************
        ENVIRONMENT DIVISION.
-      ******************************************************************
-      *-----------------------------------------------------------------
+      *****************************************************************
+      *----------------------------------------------------------------
        INPUT-OUTPUT SECTION.
-      *-----------------------------------------------------------------
+      *----------------------------------------------------------------
        FILE-CONTROL.
            SELECT CLIENTES
            ASSIGN TO 'C:\COBOL\gestao_clientes\CLIENTES.DAT'
@@ -37,6 +37,7 @@
        77 WRK-MODULO PIC X(25).
        77 WRK-TECLA PIC X(1).
        77 CLIENTES-STATUS PIC 9(02).
+       77 WRK-MSGERRO PIC X(21).
 
       *-----------------------------------------------------------------
        SCREEN SECTION.
@@ -82,6 +83,10 @@
                10 LINE 12 COLUMN 10 VALUE 'E-MAIL... '.
                10 COLUMN PLUS 2 PIC X(40) USING CLIENTES-EMAIL.
 
+       01 MOSTRA-ERRO.
+           02 MSG-ERRO.
+               10 LINE 16 COLUMN 10 PIC X(40) USING WRK-MSGERRO.
+               10 COLUMN PLUS 2 PIC X(01) USING WRK-TECLA.
 
       ******************************************************************
        PROCEDURE DIVISION.
@@ -128,9 +133,13 @@
              CLOSE CLIENTES.
 
        5000-INCLUIR.
-             MOVE 'MODULO - INCLUSAO ' TO WRK-MODULO.
-             DISPLAY TELA.
-             ACCEPT TELA-REGISTRO.
-             WRITE CLIENTES-REG.
-             DISPLAY TELA.
-             ACCEPT MENU.
+           MOVE 'MODULO - INCLUSAO ' TO WRK-MODULO.
+           DISPLAY TELA.
+           ACCEPT TELA-REGISTRO.
+           WRITE CLIENTES-REG
+             INVALID KEY
+             MOVE 'CLIENTE JA EXISTENTE ' TO WRK-MSGERRO
+             ACCEPT MOSTRA-ERRO
+           END-WRITE.
+           DISPLAY TELA.
+           ACCEPT MENU.
