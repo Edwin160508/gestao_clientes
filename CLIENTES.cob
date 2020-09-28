@@ -14,7 +14,8 @@
        WORKING-STORAGE SECTION.
       *-----------------------------------------------------------------
        77 WRK-OPCAO PIC X(1).
-       77 WRK-TITULO PIC X(20) VALUE '- MENU -'.
+       77 WRK-TITULO PIC X(29) VALUE 'SISTEMA DE GESTAO DE CLIENTES'.
+       77 WRK-MODULO PIC X(25).
 
       *TELA DO SISTEMA SESSAO "SCREEN SECTION"
       *-----------------------------------------------------------------
@@ -25,10 +26,17 @@
                10 BLANK SCREEN.
       * COMANDO PARA LIMPAR ATE O FINAL DA LINA (END 0F LINE) EOL
       * PIC X(20) ESTA DEFININDO A TAMNAHO DA TEXTO DA BARRA 20 POSICOES
-               10 LINE 01 COLUMN 01 PIC X(20) ERASE EOL
+               10 LINE 01 COLUMN 01 PIC X(29) ERASE EOL
       * PROPRIEDADE PARA COR DE FUNDO DA BARRA
-      * FROM SERIA O TEXTO ESCRITO 'MENU'
-                   BACKGROUND-COLOR 1 FROM WRK-TITULO.
+                   BACKGROUND-COLOR 2.
+      * PROPRIEDADE PARA COR DE FUNDO DO TEXTO TITULO FORCANDO TER MESMA COR DA BARRA
+               10 LINE 01 COLUMN 45    FROM WRK-TITULO
+               BACKGROUND-COLOR 2.
+
+      * PROPRIEDADES DA BARRA DE MODULOS
+               10 LINE 02 COLUMN 01 PIC X(25) ERASE EOL
+               BACKGROUND-COLOR 1 FROM WRK-MODULO.
+
 
       * OPCOES DE MENU
        01 MENU.
@@ -45,6 +53,7 @@
       ******************************************************************
        PROCEDURE DIVISION.
       ******************************************************************
+           MOVE 'MODULO - INCLUSAO' TO WRK-MODULO.
            DISPLAY TELA.
            ACCEPT MENU.
 
