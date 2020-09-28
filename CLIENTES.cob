@@ -16,6 +16,7 @@
        77 WRK-OPCAO PIC X(1).
        77 WRK-TITULO PIC X(29) VALUE 'SISTEMA DE GESTAO DE CLIENTES'.
        77 WRK-MODULO PIC X(25).
+       77 WRK-TECLA PIC X(1).
 
       *TELA DO SISTEMA SESSAO "SCREEN SECTION"
       *-----------------------------------------------------------------
@@ -53,8 +54,39 @@
       ******************************************************************
        PROCEDURE DIVISION.
       ******************************************************************
-           MOVE 'MODULO - INCLUSAO' TO WRK-MODULO.
+       0001-PRINCIPAL SECTION.
+           PERFORM 1000-INICIAR.
+           PERFORM 2000-PROCESSAR.
+           PERFORM 3000-FINALIZAR.
+           STOP RUN.
+
+       1000-INICIAR.
            DISPLAY TELA.
            ACCEPT MENU.
+       2000-PROCESSAR.
+      * SWITCH DO COBOL VERIFICA QUAL OPCAO FOI ESCOLHIDA PELO USUARIO.
+           EVALUATE WRK-OPCAO
+               WHEN 1
+                   PERFORM 5000-INCLUIR
+               WHEN 2
+                   CONTINUE
+               WHEN 3
+                   CONTINUE
+               WHEN 4
+                   CONTINUE
+               WHEN 5
+                   CONTINUE
+               WHEN OTHER
+                   IF WRK-OPCAO NOT EQUAL 'X'
+                       DISPLAY 'OPCAO INVALIDA ESCOLHA OPCAO CORRETA.'
+                   END-IF
+           END-EVALUATE.
 
-           STOP RUN.
+
+       3000-FINALIZAR.
+           CONTINUE.
+
+       5000-INCLUIR.
+           MOVE 'MODULO - INCLUSAO ' TO WRK-OPCAO.
+           DISPLAY TELA.
+           ACCEPT WRK-TECLA AT 1620.
