@@ -37,7 +37,7 @@
        77 WRK-MODULO PIC X(25).
        77 WRK-TECLA PIC X(1).
        77 CLIENTES-STATUS PIC 9(02).
-       77 WRK-MSGERRO PIC X(21).
+       77 WRK-MSGERRO PIC X(30).
 
       *-----------------------------------------------------------------
        SCREEN SECTION.
@@ -84,9 +84,15 @@
                10 COLUMN PLUS 2 PIC X(40) USING CLIENTES-EMAIL.
 
        01 MOSTRA-ERRO.
-           02 MSG-ERRO.
-               10 LINE 16 COLUMN 10 PIC X(40) USING WRK-MSGERRO.
-               10 COLUMN PLUS 2 PIC X(01) USING WRK-TECLA.
+            02 MSG-ERRO.
+               10 LINE 16 COLUMN 01 ERASE EOL
+                             BACKGROUND-COLOR 3.
+               10 LINE 16 COLUMN 10 PIC X(30)
+                             BACKGROUND-COLOR 3
+                             FROM WRK-MSGERRO.
+               10 COLUMN PLUS 2 PIC X(01)
+                             BACKGROUND-COLOR 3
+                             USING WRK-TECLA.
 
       ******************************************************************
        PROCEDURE DIVISION.
