@@ -38,6 +38,7 @@
        77 WRK-TECLA PIC X(1).
        77 CLIENTES-STATUS PIC 9(02).
        77 WRK-MSGERRO PIC X(30).
+       77 WRK-CONTALINHA PIC 9(03) VALUE 0.
 
       *-----------------------------------------------------------------
        SCREEN SECTION.
@@ -226,6 +227,19 @@
                                CLIENTES-NOME ' '
                                CLIENTES-EMAIL
                        READ CLIENTES NEXT
+                       ADD 1 TO WRK-CONTALINHA
+                       IF WRK-CONTALINHA = 5
+                           MOVE 'PRESSIONE ALGUMA TECLA ' TO WRK-MSGERRO
+                           ACCEPT MOSTRA-ERRO
+                           MOVE 'MODULO - RELATORIO ' TO WRK-MODULO
+                           DISPLAY TELA
+                           DISPLAY '  RELATORIO DE CLIENTES '
+                           DISPLAY '---------------------'
+                           MOVE 0 TO WRK-CONTALINHA
+                       END-IF
+
+
+
                    END-PERFORM
            END-READ.
                ACCEPT MOSTRA-ERRO.
