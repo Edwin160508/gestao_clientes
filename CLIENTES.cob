@@ -117,7 +117,7 @@
             DISPLAY TELA.
             ACCEPT MENU.
        2000-PROCESSAR.
-           MOVE SPACES TO MSG-ERRO.
+           MOVE SPACES TO CLIENTES-NOME CLIENTES-EMAIL MSG-ERRO.
       * SWITCH DO COBOL VERIFICA QUAL OPCAO FOI ESCOLHIDA PELO USUARIO.
             EVALUATE WRK-OPCAO
               WHEN 1
@@ -169,3 +169,21 @@
        8000-EXCLUIR.
            MOVE 'MODULO - EXCLUSAO ' TO WRK-MODULO.
            DISPLAY TELA.
+           DISPLAY TELA-REGISTRO.
+           ACCEPT CHAVE.
+           READ CLIENTES
+               INVALID KEY
+               MOVE 'CLIENTE NAO ENCONTRADO ' TO WRK-MSGERRO
+                   ACCEPT MOSTRA-ERRO
+               NOT INVALID KEY
+                   MOVE ' DESEJA EXCLUIR  (S/N)? ' TO WRK-MSGERRO
+                   DISPLAY SS-DADOS
+           END-READ.
+               ACCEPT MOSTRA-ERRO.
+               IF WRK-TECLA = 'S' AND CLIENTES-STATUS = 0
+                   DELETE CLIENTES
+                       INVALID KEY
+                       MOVE 'NAO EXCLUIDO' TO WRK-MSGERRO
+                       ACCEPT MOSTRA-ERRO
+                   END-DELETE
+               END-IF.
