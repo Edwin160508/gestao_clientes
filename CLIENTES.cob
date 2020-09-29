@@ -122,7 +122,7 @@
               WHEN 1
                PERFORM 5000-INCLUIR
               WHEN 2
-                CONTINUE
+                PERFORM 6000-CONSULTAR
               WHEN 3
                 CONTINUE
               WHEN 4
@@ -149,3 +149,7 @@
              MOVE 'CLIENTE JA EXISTENTE ' TO WRK-MSGERRO
              ACCEPT MOSTRA-ERRO
            END-WRITE.
+
+       6000-CONSULTAR.
+           MOVE 'MODULO - CONSULTA ' TO WRK-MODULO.
+           DISPLAY TELA.
