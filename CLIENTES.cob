@@ -117,6 +117,7 @@
             DISPLAY TELA.
             ACCEPT MENU.
        2000-PROCESSAR.
+           MOVE SPACES TO MSG-ERRO.
       * SWITCH DO COBOL VERIFICA QUAL OPCAO FOI ESCOLHIDA PELO USUARIO.
             EVALUATE WRK-OPCAO
               WHEN 1
@@ -155,3 +156,12 @@
            DISPLAY TELA.
            DISPLAY TELA-REGISTRO.
            ACCEPT CHAVE.
+           READ CLIENTES
+               INVALID KEY
+                   MOVE 'CLIENTE NAO ENCONTRADO ' TO WRK-MSGERRO
+                   ACCEPT MOSTRA-ERRO
+               NOT INVALID KEY
+                   MOVE '- ENCONTRADO --' TO WRK-MSGERRO
+                   DISPLAY SS-DADOS
+           END-READ.
+               ACCEPT MOSTRA-ERRO.
