@@ -39,6 +39,7 @@
        77 CLIENTES-STATUS PIC 9(02).
        77 WRK-MSGERRO PIC X(30).
        77 WRK-CONTALINHA PIC 9(03) VALUE 0.
+       77 WRK-QTREGISTROS PIC 9(05) VALUE 0.
 
       *-----------------------------------------------------------------
        SCREEN SECTION.
@@ -223,6 +224,7 @@
                    DISPLAY '  RELATORIO DE CLIENTES '
                    DISPLAY '---------------------'
                    PERFORM UNTIL CLIENTES-STATUS = 10
+                       ADD 1 TO WRK-QTREGISTROS
                        DISPLAY CLIENTES-FONE ' '
                                CLIENTES-NOME ' '
                                CLIENTES-EMAIL
@@ -242,4 +244,6 @@
 
                    END-PERFORM
            END-READ.
+               MOVE 'REQUISTROS LIDOS ' TO WRK-MSGERRO.
+               MOVE WRK-QTREGISTROS TO WRK-MSGERRO(18:05).
                ACCEPT MOSTRA-ERRO.
