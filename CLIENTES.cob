@@ -127,7 +127,7 @@
               WHEN 3
                 CONTINUE
               WHEN 4
-                CONTINUE
+                PERFORM 8000-EXCLUIR
               WHEN 5
                 CONTINUE
               WHEN OTHER
@@ -165,3 +165,7 @@
                    DISPLAY SS-DADOS
            END-READ.
                ACCEPT MOSTRA-ERRO.
+
+       8000-EXCLUIR.
+           MOVE 'MODULO - EXCLUSAO ' TO WRK-MODULO.
+           DISPLAY TELA.
