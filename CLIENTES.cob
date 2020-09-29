@@ -153,3 +153,5 @@
        6000-CONSULTAR.
            MOVE 'MODULO - CONSULTA ' TO WRK-MODULO.
            DISPLAY TELA.
+           DISPLAY TELA-REGISTRO.
+           ACCEPT CHAVE.
