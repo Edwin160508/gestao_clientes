@@ -129,7 +129,7 @@
               WHEN 4
                 PERFORM 8000-EXCLUIR
               WHEN 5
-                CONTINUE
+                PERFORM 9000-RELATORIO
               WHEN OTHER
                 IF WRK-OPCAO NOT EQUAL 'X'
                     DISPLAY 'ENTRE COM OPCAO CORRETA'
@@ -209,3 +209,7 @@
                        ACCEPT MOSTRA-ERRO
                    END-DELETE
                END-IF.
+
+       9000-RELATORIO.
+           MOVE 'MODULO - RELATORIO ' TO WRK-MODULO.
+           DISPLAY TELA.
