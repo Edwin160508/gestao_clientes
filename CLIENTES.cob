@@ -17,6 +17,10 @@
              ACCESS MODE IS DYNAMIC
              FILE STATUS IS CLIENTES-STATUS
              RECORD KEY IS  CLIENTES-CHAVE.
+
+           SELECT RELATO
+           ASSIGN TO 'C:\COBOL\gestao_clientes\REALTO.TXT'
+             ORGANIZATION IS SEQUENTIAL.
       ******************************************************************
        DATA DIVISION.
       ******************************************************************
@@ -28,6 +32,9 @@
             05 CLIENTES-NOME     PIC X(30).
             05 CLIENTES-EMAIL    PIC X(40).
 
+       FD RELATO.
+       01 RELATO-REG.
+           05 RELATO-DADOS PIC X(79).
 
       *-----------------------------------------------------------------
        WORKING-STORAGE SECTION.
@@ -68,10 +75,11 @@
             05 LINE 08 COLUMN 15 VALUE '2 - CONSULTAR'.
             05 LINE 09 COLUMN 15 VALUE '3 - ALTERAR'.
             05 LINE 10 COLUMN 15 VALUE '4 - EXCLUIR'.
-            05 LINE 11 COLUMN 15 VALUE '5 - RELATORIO'.
-            05 LINE 12 COLUMN 15 VALUE 'X - SAIR'.
-            05 LINE 13 COLUMN 15 VALUE 'OPCAO......: ' .
-            05 LINE 13 COLUMN 28 USING WRK-OPCAO.
+            05 LINE 11 COLUMN 15 VALUE '5 - RELATORIO EM TELA'.
+            05 LINE 12 COLUMN 15 VALUE '6 - RELATORIO EM DISCO'.
+            05 LINE 13 COLUMN 15 VALUE 'X - SAIR'.
+            05 LINE 14 COLUMN 15 VALUE 'OPCAO......: ' .
+            05 LINE 14 COLUMN 28 USING WRK-OPCAO.
 
        01 TELA-REGISTRO.
             05 CHAVE FOREGROUND-COLOR 2.
@@ -132,6 +140,8 @@
                 PERFORM 8000-EXCLUIR
               WHEN 5
                 PERFORM 9000-RELATORIOTELA
+              WHEN 6
+                PERFORM 9100-RELATORIODISCO
               WHEN OTHER
                 IF WRK-OPCAO NOT EQUAL 'X'
                     DISPLAY 'ENTRE COM OPCAO CORRETA'
@@ -246,4 +256,29 @@
            END-READ.
                MOVE 'REQUISTROS LIDOS ' TO WRK-MSGERRO.
                MOVE WRK-QTREGISTROS TO WRK-MSGERRO(18:05).
+               ACCEPT MOSTRA-ERRO.
+
+       9100-RELATORIODISCO.
+           MOVE 'MODULO - RELATORIO ' TO WRK-MODULO.
+           DISPLAY TELA.
+           MOVE 123456789 TO CLIENTES-FONE.
+           START CLIENTES KEY EQUAL CLIENTES-FONE.
+           READ CLIENTES
+               INVALID KEY
+                   MOVE 'REGISTRO NAO ENCONTRADO ' TO WRK-MSGERRO
+               NOT INVALID KEY
+                   OPEN OUTPUT RELATO
+                   PERFORM UNTIL CLIENTES-STATUS = 10
+                       ADD 1 TO WRK-QTREGISTROS
+                       MOVE CLIENTES-REG TO RELATO-REG
+                       WRITE RELATO-REG
+                       READ CLIENTES NEXT
+                   END-PERFORM
+      *             MOVE 'REQUISTROS LIDOS ' TO RELATO-REG
+      *             MOVE WRK-QTREGISTROS TO RELATO-REG(18:05)
+      *             WRITE RELATO-REG
+                   CLOSE RELATO
+           END-READ.
+               MOVE 'REGISTROS LIDOS ' TO WRK-MSGERRO.
+               MOVE WRK-QTREGISTROS TO WRK-MSGERRO(17:05).
                ACCEPT MOSTRA-ERRO.
