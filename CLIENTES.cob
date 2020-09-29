@@ -98,8 +98,9 @@
        PROCEDURE DIVISION.
       ******************************************************************
        0001-PRINCIPAL SECTION.
-            PERFORM 1000-INICIAR.
-            PERFORM 2000-PROCESSAR.
+      * EXECUTE O PARAGRAFO INICIAR ATE MONTATELA.
+            PERFORM 1000-INICIAR THRU 1100-MONTATELA.
+            PERFORM 2000-PROCESSAR UNTIL WRK-OPCAO = 'X'.
             PERFORM 3000-FINALIZAR.
             STOP RUN.
 
@@ -112,7 +113,7 @@
                END-IF.
 
 
-
+       1100-MONTATELA.
             DISPLAY TELA.
             ACCEPT MENU.
        2000-PROCESSAR.
@@ -134,6 +135,7 @@
                 END-IF
             END-EVALUATE.
 
+               PERFORM 1100-MONTATELA.
 
        3000-FINALIZAR.
              CLOSE CLIENTES.
@@ -147,5 +149,3 @@
              MOVE 'CLIENTE JA EXISTENTE ' TO WRK-MSGERRO
              ACCEPT MOSTRA-ERRO
            END-WRITE.
-           DISPLAY TELA.
-           ACCEPT MENU.
