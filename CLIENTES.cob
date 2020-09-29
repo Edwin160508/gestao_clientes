@@ -125,7 +125,7 @@
               WHEN 2
                 PERFORM 6000-CONSULTAR
               WHEN 3
-                CONTINUE
+                PERFORM 7000-ALTERAR
               WHEN 4
                 PERFORM 8000-EXCLUIR
               WHEN 5
@@ -165,6 +165,12 @@
                    DISPLAY SS-DADOS
            END-READ.
                ACCEPT MOSTRA-ERRO.
+
+       7000-ALTERAR.
+           MOVE 'MODULO - ALTERACAO ' TO WRK-MODULO.
+           DISPLAY TELA.
+
+
 
        8000-EXCLUIR.
            MOVE 'MODULO - EXCLUSAO ' TO WRK-MODULO.
