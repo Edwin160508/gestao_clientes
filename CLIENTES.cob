@@ -14,7 +14,7 @@
            SELECT CLIENTES
            ASSIGN TO 'C:\COBOL\gestao_clientes\CLIENTES.DAT'
              ORGANIZATION IS INDEXED
-             ACCESS MODE IS RANDOM
+             ACCESS MODE IS DYNAMIC
              FILE STATUS IS CLIENTES-STATUS
              RECORD KEY IS  CLIENTES-CHAVE.
       ******************************************************************
@@ -213,3 +213,19 @@
        9000-RELATORIOTELA.
            MOVE 'MODULO - RELATORIO ' TO WRK-MODULO.
            DISPLAY TELA.
+           MOVE 123456789 TO CLIENTES-FONE.
+           START CLIENTES KEY EQUAL CLIENTES-FONE.
+           READ CLIENTES
+               INVALID KEY
+                   MOVE 'REGISTRO NAO ENCONTRADO ' TO WRK-MSGERRO
+               NOT INVALID KEY
+                   DISPLAY '  RELATORIO DE CLIENTES '
+                   DISPLAY '---------------------'
+                   PERFORM UNTIL CLIENTES-STATUS = 10
+                       DISPLAY CLIENTES-FONE ' '
+                               CLIENTES-NOME ' '
+                               CLIENTES-EMAIL
+                       READ CLIENTES NEXT
+                   END-PERFORM
+           END-READ.
+               ACCEPT MOSTRA-ERRO.
