@@ -124,6 +124,7 @@
 
 
        1100-MONTATELA.
+            MOVE 0 TO WRK-QTREGISTROS.
             DISPLAY TELA.
             ACCEPT MENU.
        2000-PROCESSAR.
